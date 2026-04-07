@@ -1,0 +1,6 @@
+/docs
+/scripts
+/shared
+docker-compose.yml
+Dockerfile
+package.json

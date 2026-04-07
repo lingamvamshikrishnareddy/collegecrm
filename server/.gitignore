@@ -1,0 +1,5 @@
+/src/database
+/src/jobs
+/src/sockets
+package-lock.json
+/node_modules

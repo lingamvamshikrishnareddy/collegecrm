@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="CollegeLife - Your comprehensive platform for college management, life skills, and career preparation" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
+  <!-- Preconnect to external domains for better performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Meta tags for SEO -->
+  <meta property="og:title" content="CollegeLife - Complete College Management Platform" />
+  <meta property="og:description" content="Bridge the gap between college life and real-world preparation with academic management, life skills, networking, and career development." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://collegelife.app" />
+  <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+  
+  <title>CollegeLife - Your Gateway to College Success</title>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  
+  <!-- Loading fallback -->
+  <div id="loading-fallback" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+    <div style="width: 60px; height: 60px; border: 4px solid #e2e8f0; border-top: 4px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    <p style="margin-top: 16px; color: #64748b; font-family: 'Inter', sans-serif;">Loading CollegeLife...</p>
+  </div>
+  
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</body>
+</html>
