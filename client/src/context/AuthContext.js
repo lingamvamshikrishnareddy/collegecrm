@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authService } from '../services/api/auth';
 
 const AuthContext = createContext();
 
@@ -15,25 +16,62 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in (e.g., from localStorage or token)
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Validate token and set user
-      // For now, just set a mock user
-      setUser({ id: 1, name: 'Student', role: 'student' });
-    }
-    setLoading(false);
+    // Check if user is logged in by validating token with server
+    const validateToken = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await authService.getProfile();
+          if (response.success) {
+            setUser({
+              ...response.data.user,
+              profile: response.data.profile,
+              college: response.data.college
+            });
+          } else {
+            // Token invalid, clear it
+            localStorage.removeItem('token');
+          }
+        } catch (error) {
+          // Token validation failed, clear it
+          localStorage.removeItem('token');
+        }
+      }
+      setLoading(false);
+    };
+
+    validateToken();
   }, []);
 
   const login = async (email, password) => {
-    // Mock login
-    setUser({ id: 1, name: 'Student', role: 'student' });
-    localStorage.setItem('token', 'mock-token');
+    try {
+      const response = await authService.login({ email, password });
+      if (response.success) {
+        const { token, user: userData, profile, college } = response.data;
+        localStorage.setItem('token', token);
+        setUser({
+          ...userData,
+          profile,
+          college
+        });
+        return { success: true };
+      } else {
+        return { success: false, message: response.message };
+      }
+    } catch (error) {
+      return { success: false, message: error.message || 'Login failed' };
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('token');
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem('token');
+    }
   };
 
   const value = {
