@@ -63,6 +63,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (userData) => {
+    try {
+      const response = await authService.register(userData);
+      if (response.success) {
+        const { token, user: userData, profile, college } = response.data;
+        localStorage.setItem('token', token);
+        setUser({
+          ...userData,
+          profile,
+          college
+        });
+        return { success: true };
+      } else {
+        return { success: false, message: response.message };
+      }
+    } catch (error) {
+      return { success: false, message: error.message || 'Registration failed' };
+    }
+  };
+
   const logout = async () => {
     try {
       await authService.logout();
@@ -77,6 +97,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     login,
+    register,
     logout,
     loading,
   };
